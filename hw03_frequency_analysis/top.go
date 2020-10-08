@@ -13,8 +13,8 @@ type freq struct {
 func Top10(input string) []string {
 	result := []freq{}
 
-	input = strings.Replace(input, "\n", " ", -1) // Convert NEW_LINE to SPACE
-	input = strings.Replace(input, "\t", " ", -1) // Convert TAB to SPACE
+	input = strings.ReplaceAll(input, "\n", " ") // Convert NEW_LINE to SPACE
+	input = strings.ReplaceAll(input, "\t", " ") // Convert TAB to SPACE
 
 	regexp := regexp.MustCompile(" +")
 	sliceToAnalize := regexp.Split(input, -1) // Convert spaces sequence to one SPACE
