@@ -49,8 +49,17 @@ func TestCache(t *testing.T) {
 		require.Nil(t, val)
 	})
 
-	t.Run("purge logic", func(t *testing.T) {
-		// Write me
+	t.Run("clear cache", func(t *testing.T) {
+		c := NewCache(15)
+		_ = c.Set("a", 1)
+		_ = c.Set("b", 2)
+		c.Clear()
+		val, ok := c.Get("a")
+		require.Nil(t, val)
+		require.False(t, ok)
+		val, ok = c.Get("b")
+		require.Nil(t, val)
+		require.False(t, ok)
 	})
 }
 
