@@ -39,7 +39,7 @@ func (l *list) Back() *listItem {
 }
 
 func (l *list) PushFront(v interface{}) *listItem {
-	var firstItem = &listItem{Value: v}
+	var firstItem = &listItem{Value: v, Next: nil, Prev: nil}
 
 	if l.Len() == 0 {
 		l.last = firstItem
@@ -54,7 +54,7 @@ func (l *list) PushFront(v interface{}) *listItem {
 }
 
 func (l *list) PushBack(v interface{}) *listItem {
-	var lastItem = &listItem{Value: v}
+	var lastItem = &listItem{Value: v, Next: nil, Prev: nil}
 	if l.Len() == 0 {
 		l.first = lastItem
 	} else {
