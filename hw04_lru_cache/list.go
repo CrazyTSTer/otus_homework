@@ -39,33 +39,32 @@ func (l *list) Back() *listItem {
 }
 
 func (l *list) PushFront(v interface{}) *listItem {
-	firstItem := listItem{Value: v}
+	var firstItem = &listItem{Value: v}
 
 	if l.Len() == 0 {
-		l.last = &firstItem
+		l.last = firstItem
 	} else {
-		l.first.Prev = &firstItem
+		l.first.Prev = firstItem
 		firstItem.Next = l.first
 	}
-	l.first = &firstItem
+	l.first = firstItem
 
 	l.len++
-	return &firstItem
+	return firstItem
 }
 
 func (l *list) PushBack(v interface{}) *listItem {
-	lastItem := listItem{Value: v}
-
+	var lastItem = &listItem{Value: v}
 	if l.Len() == 0 {
-		l.first = &lastItem
+		l.first = lastItem
 	} else {
-		l.last.Next = &lastItem
+		l.last.Next = lastItem
 		lastItem.Prev = l.last
 	}
-	l.last = &lastItem
+	l.last = lastItem
 
 	l.len++
-	return &lastItem
+	return lastItem
 }
 
 func (l *list) Remove(i *listItem) {
