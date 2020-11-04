@@ -12,7 +12,7 @@ type Task func() error
 
 func Run(tasks []Task, n int, m int) error {
 	// Err counter
-	var errCount uint32
+	var errCount int32
 
 	// Create task channel
 	taskCh := make(chan Task)
@@ -30,7 +30,7 @@ func Run(tasks []Task, n int, m int) error {
 			for task := range taskCh {
 				// Execute separate tasks, if it finished with error, increase error counter
 				if err := task(); err != nil {
-					atomic.AddUint32(&errCount, 1)
+					atomic.AddInt32(&errCount, 1)
 				}
 			}
 		}()
@@ -39,7 +39,7 @@ func Run(tasks []Task, n int, m int) error {
 	// Push all tasks to channel
 	for _, task := range tasks {
 		// Stop pushing tasks if error counter >= M
-		if atomic.LoadUint32(&errCount) >= uint32(m) {
+		if atomic.LoadInt32(&errCount) >= int32(m) {
 			break
 		}
 		// Push task to channel
@@ -52,7 +52,7 @@ func Run(tasks []Task, n int, m int) error {
 	wg.Wait()
 
 	// Check for error count and return an error if error counter >= M
-	if errCount >= uint32(m) {
+	if errCount >= int32(m) {
 		return ErrErrorsLimitExceeded
 	}
 	return nil
