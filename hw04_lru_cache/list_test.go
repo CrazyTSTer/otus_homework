@@ -93,4 +93,19 @@ func TestList(t *testing.T) {
 		require.Equal(t, 20, l.Back().Value)
 	})
 
+	t.Run("Check for Nil in Next/Prev", func(t *testing.T) {
+		l := NewList()
+		firstItem := l.PushFront(10)
+		middleItem := l.PushBack(20)
+		lastItem := l.PushBack(30)
+		require.Nil(t, firstItem.Prev)
+		require.NotNil(t, firstItem.Next)
+
+		require.NotNil(t, middleItem.Prev)
+		require.NotNil(t, middleItem.Next)
+
+		require.NotNil(t, lastItem.Prev)
+		require.Nil(t, lastItem.Next)
+	})
+
 }
