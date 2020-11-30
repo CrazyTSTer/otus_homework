@@ -21,7 +21,7 @@ func Copy(fromPath, toPath string, offset, limit int64) error {
 
 	sourceFileInfo, err := sourceFile.Stat()
 	if err != nil {
-		return err
+		return fmt.Errorf("error: %w", err)
 	}
 
 	switch {
@@ -34,17 +34,17 @@ func Copy(fromPath, toPath string, offset, limit int64) error {
 	}
 
 	if _, err = sourceFile.Seek(offset, io.SeekStart); err != nil {
-		return fmt.Errorf("Error: %v", err)
+		return fmt.Errorf("error: %w", err)
 	}
 
 	destinationFile, err := os.Create(toPath)
 	if err != nil {
-		return fmt.Errorf("Error: %v", err)
+		return fmt.Errorf("error: %w", err)
 	}
 	defer destinationFile.Close()
 
 	if _, err = io.CopyN(destinationFile, sourceFile, limit); err != nil {
-		return fmt.Errorf("Error: %v", err)
+		return fmt.Errorf("error: %w", err)
 	}
 
 	return nil
